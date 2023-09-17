@@ -1,4 +1,4 @@
-const { criarUsuario, buscarUsuarioPorUsername } = require('../services/userService');
+const { criarUsuario, buscarUsuarioPorUsername } = require('../../service/usuario/userService');
 
 exports.createUser = (req, res) => {
     const { username, password, bio } = req.body;

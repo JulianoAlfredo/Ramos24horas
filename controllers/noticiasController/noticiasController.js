@@ -1,4 +1,4 @@
-const { inserirNoticia, buscarNoticias } = require('../services/noticiasServices');
+const { inserirNoticia, buscarNoticias } = require('../../service/noticiasService/noticiasServices');
 
 exports.uploadNoticia = (req, res) => {
     const { title, description, location } = req.body;
