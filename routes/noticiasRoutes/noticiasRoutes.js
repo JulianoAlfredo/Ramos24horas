@@ -4,5 +4,5 @@ const noticiasController = require('../../controllers/noticiasController/noticia
 
 router.post('/upload', noticiasController.uploadNoticia);
 router.get('/getNoticias', noticiasController.getNoticias);
-
+router.put('/interaction/like/:idNoticia', noticiasController.interactionNoticia);
 module.exports = router;

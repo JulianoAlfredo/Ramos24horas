@@ -1,14 +1,14 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database('./db/jornalismo-cidadao.db');
 
-exports.inserirNoticia = (title, description, location, filename, callback) => {
+exports.inserirNoticia = (title, description, location, like, callback) => {
 
     const sql = `
-          INSERT INTO noticias (titulo, descricao, localizacao, arquivo)
+          INSERT INTO noticias (titulo, descricao, localizacao, likes)
           VALUES (?, ?, ?, ?)
         `;
 
-    db.run(sql, [title, description, location, filename], (err) => {
+    db.run(sql, [title, description, location, like], (err) => {
         if (err) {
             console.error(err.message);
             return callback(null, { error: 'Erro ao salvar no banco de dados.' });
@@ -35,3 +35,18 @@ exports.buscarNoticias = (callback) => {
         callback(null, { noticias: rows });
     });
 };
+
+exports.interacaoNoticia = (idNoticia, callback) =>{
+    const sql = `
+    UPDATE noticias SET likes = likes+1 WHERE id = ${idNoticia}
+  `;
+  db.run(sql, [], (err) =>{
+    if (err) {
+        console.error(err.message);
+        return callback(null, { error: 'Erro ao salvar no banco de dados.' });
+
+    }
+
+    callback(null, { message: 'Like adicionado' });
+  })
+}

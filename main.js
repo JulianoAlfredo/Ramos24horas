@@ -77,7 +77,7 @@ db.serialize(() => {
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 
-app.use('/noticias', upload.single('file'), noticiasRoutes);
+app.use('/noticias', upload.any(), noticiasRoutes);
 
 app.use('/user', upload.any(), userRoutes);
 

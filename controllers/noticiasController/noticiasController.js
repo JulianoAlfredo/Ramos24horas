@@ -1,23 +1,21 @@
-const { inserirNoticia, buscarNoticias } = require('../../service/noticiasService/noticiasServices');
+const { tratarResponse } = require('../../miscellaneous/tratarResponse');
+const { inserirNoticia, buscarNoticias, interacaoNoticia } = require('../../service/noticiasService/noticiasServices');
 
 exports.uploadNoticia = (req, res) => {
-    const { title, description, location } = req.body;
-    const filename = req.file.filename;
-    inserirNoticia(title, description, location, filename,(err, result) =>{
-        if(err){
-            console.log(err.message);
-            return res.status(500).json({ error: "Algo deu errado" });
-        }
-        return res.status(200).json(result);
+    const { title, description, location, likes } = req.body;
+    inserirNoticia(title, description, location, likes,(err, result) =>{
+        tratarResponse(err, result, req, res)
     })
 };
 
 exports.getNoticias = (req, res) => {
     buscarNoticias((err,result) =>{
-        if(err){
-            console.error(err.message);
-            return res.status(500).json({ error: "Algo deu errado" });
-        }
-        return res.status(200).json(result)
+        tratarResponse(err, result, req, res)
     })
 };
+
+exports.interactionNoticia = (req, res) =>{
+    interacaoNoticia(req.params.idNoticia, (err, result) =>{
+        tratarResponse(err, result, req, res)
+    })
+}
